@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jardin Kawaii pour Toi 🌸💖</title>
+<style>
+  /* Corps du site */
+  body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(to top, #ffd1dc, #ffe6f0);
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    cursor: pointer;
+    position: relative;
+  }
+
+  /* Message principal */
+  #message {
+    position: absolute;
+    top: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 1.6em;
+    color: #ff69b4;
+    text-shadow: 1px 1px 5px #fff;
+  }
+
+  /* Nuages flottants */
+  .cloud {
+    position: absolute;
+    top: 50px;
+    width: 100px;
+    height: 60px;
+    background: #fff;
+    border-radius: 50%;
+    opacity: 0.7;
+    animation: cloudMove 60s linear infinite;
+  }
+
+  @keyframes cloudMove {
+    0% {transform: translateX(-150px);}
+    100% {transform: translateX(110vw);}
+  }
+
+  /* Éléments interactifs (fleurs, cœurs, Kitty...) */
+  .emoji {
+    position: absolute;
+    font-size: 2em;
+    animation: float 5s ease-out forwards;
+    pointer-events: none;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-200px) scale(0.5) rotate(360deg); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+<div id="message">Clique sur le jardin pour voir Hello Kitty et ses amis 🌸💖</div>
+
+<script>
+  // Sons kawaii
+  const popSound = new Audio('https://www.soundjay.com/buttons/sounds/button-3.mp3');
+
+  // Messages d'amour
+  const messages = [
+    "Tu es adorable comme Hello Kitty 🐱",
+    "Ton sourire me fait fondre 💖",
+    "Chaque jour avec toi est magique ✨",
+    "Tu es mon trésor 💎",
+    "Je t’aime très fort ❤️",
+    "Tu rends ma vie colorée 🌈"
+  ];
+
+  // Emojis interactifs
+  const emojis = ["🌸","💖","🦄","🐱","🌷","🌼","✨","🌟","🍓","🦋"];
+
+  // Fonction pour créer des nuages
+  function createCloud(top, size, speed) {
+    const cloud = document.createElement('div');
+    cloud.className = 'cloud';
+    cloud.style.top = top + 'px';
+    cloud.style.width = size + 'px';
+    cloud.style.height = (size * 0.6) + 'px';
+    cloud.style.animationDuration = speed + 's';
+    document.body.appendChild(cloud);
+  }
+
+  // Création de quelques nuages au hasard
+  for (let i = 0; i < 5; i++) {
+    createCloud(Math.random() * 100 + 20, Math.random() * 80 + 80, Math.random() * 30 + 40);
+  }
+
+  // Clic interactif
+  document.body.addEventListener("click", (e) => {
+    // Jouer le son
+    popSound.currentTime = 0;
+    popSound.play();
+
+    // Créer emoji flottant
+    const emoji = document.createElement("div");
+    emoji.className = "emoji";
+    emoji.style.left = e.clientX + "px";
+    emoji.style.top = e.clientY + "px";
+    emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+    // Taille aléatoire et couleur pastel
+    emoji.style.fontSize = (Math.random() * 30 + 20) + "px";
+    const pastelColors = ["#ffb6c1","#ffc0cb","#ff69b4","#ffdab9","#ffe4e1","#ffd1dc"];
+    emoji.style.color = pastelColors[Math.floor(Math.random() * pastelColors.length)];
+
+    document.body.appendChild(emoji);
+
+    // Changer le message
+    const message = messages[Math.floor(Math.random() * messages.length)];
+    document.getElementById("message").textContent = message;
+
+    // Supprimer après 5 secondes
+    setTimeout(() => {
+      emoji.remove();
+    }, 5000);
+  });
+</script>
+</body>
+</html>
